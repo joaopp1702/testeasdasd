@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sobreviva à Revolução Francesa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+    #story {
+      margin-bottom: 20px;
+      font-size: 1.2em;
+      white-space: pre-line;
+    }
+    button {
+      display: block;
+      margin: 8px 0;
+      padding: 10px 15px;
+      font-size: 1em;
+      width: 100%;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #4a90e2;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #357abd;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sobreviva à Revolução Francesa</h1>
+  <div id="story"></div>
+  <div id="choices"></div>
+
+  <script>
+    const storyData = {
+      start: {
+        text: `Você é um camponês na França em 1789.  
+A Revolução Francesa está começando e o povo está revoltado.  
+O que você faz?`,
+        choices: [
+          { text: "Juntar-se ao povo e protestar", next: "join_revolt" },
+          { text: "Ficar na sua fazenda e esperar", next: "stay_farm" },
+          { text: "Tentar fugir para outra cidade", next: "try_escape" }
+        ]
+      },
+      join_revolt: {
+        text: `Você se junta ao povo e vai para a praça principal.  
+De repente, ouve o barulho das tropas reais chegando.`,
+        choices: [
+          { text: "Ficar e enfrentar as tropas", next: "fight_troops" },
+          { text: "Correr e se esconder", next: "hide" }
+        ]
+      },
+      stay_farm: {
+        text: `Você decide ficar longe da confusão, cuidando da sua fazenda.  
+Mas os impostos aumentam e soldados aparecem para cobrar.`,
+        choices: [
+          { text: "Pagar o imposto e esperar", next: "pay_tax" },
+          { text: "Negociar com os soldados", next: "negotiate" }
+        ]
+      },
+      try_escape: {
+        text: `Você tenta fugir da cidade à noite.  
+No caminho, é parado por um grupo de revolucionários desconfiados.`,
+        choices: [
+          { text: "Convencer que não é inimigo", next: "convince_revolutionaries" },
+          { text: "Tentar fugir à força", next: "fight_revolutionaries" }
+        ]
+      },
+
+      fight_troops: {
+        text: `Você luta bravamente, mas os soldados são muitos.  
+Você é capturado e levado para julgamento.`,
+        choices: [
+          { text: "Pedir clemência", next: "clemency" },
+          { text: "Aceitar o destino", next: "execution" }
+        ]
+      },
+      hide: {
+        text: `Você se esconde em um celeiro.  
+Os soldados passam, mas a cidade está sob controle do povo agora.`,
+        choices: [
+          { text: "Sair e ajudar o povo", next: "help_people" },
+          { text: "Ficar escondido até tudo passar", next: "wait" }
+        ]
+      },
+
+      pay_tax: {
+        text: `Você paga os impostos, mas fica cada vez mais difícil sobreviver.  
+Sua família está passando fome.`,
+        choices: [
+          { text: "Tentar juntar-se ao movimento revolucionário", next: "join_revolt" },
+          { text: "Aceitar o destino e esperar tempos melhores", next: "wait" }
+        ]
+      },
+
+      negotiate: {
+        text: `Você tenta negociar e convence os soldados a poupar sua fazenda.  
+Mas eles avisam que os próximos serão mais violentos.`,
+        choices: [
+          { text: "Preparar a fazenda para se defender", next: "defend_farm" },
+          { text: "Sair da cidade", next: "try_escape" }
+        ]
+      },
+
+      convince_revolutionaries: {
+        text: `Você convence os revolucionários que quer ajudar a causa.  
+Eles te aceitam no grupo.`,
+        choices: [
+          { text: "Lutar junto deles", next: "fight_troops" },
+          { text: "Espiar para os rebeldes", next: "spy" }
+        ]
+      },
+
+      fight_revolutionaries: {
+        text: `Você tenta fugir à força, mas é dominado.  
+Eles te prendem e dizem que você será julgado.`,
+        choices: [
+          { text: "Pedir perdão", next: "clemency" },
+          { text: "Recusar e aceitar punição", next: "execution" }
+        ]
+      },
+
+      clemency: {
+        text: `Você pede clemência e é enviado para trabalhos forçados.  
+Talvez um dia haja paz.`,
+        choices: [
+          { text: "Recomeçar", next: "start" }
+        ]
+      },
+
+      execution: {
+        text: `Você é levado à guilhotina.  
+Fim do jogo.`,
+        choices: [
+          { text: "Jogar novamente", next: "start" }
+        ]
+      },
+
+      help_people: {
+        text: `Você ajuda o povo a organizar a revolta.  
+A Revolução avança e a monarquia cai!`,
+        choices: [
+          { text: "Parabéns, você venceu!", next: "start" }
+        ]
+      },
+
+      wait: {
+        text: `Você espera pacientemente.  
+Tempos difíceis, mas sobreviverá.`,
+        choices: [
+          { text: "Recomeçar", next: "start" }
+        ]
+      },
+
+      defend_farm: {
+        text: `Você prepara sua fazenda para se defender dos soldados.  
+A batalha é dura, mas você resiste!`,
+        choices: [
+          { text: "Parabéns, você sobreviveu!", next: "start" }
+        ]
+      },
+
+      spy: {
+        text: `Você espia para os rebeldes e ajuda a planejar estratégias.  
+A revolução prospera graças a você!`,
+        choices: [
+          { text: "Parabéns, você venceu!", next: "start" }
+        ]
+      }
+    };
+
+    const storyEl = document.getElementById('story');
+    const choicesEl = document.getElementById('choices');
+
+    function startGame() {
+      showStoryNode('start');
+    }
+
+    function showStoryNode(nodeKey) {
+      const node = storyData[nodeKey];
+      storyEl.textContent = node.text;
+      choicesEl.innerHTML = '';
+
+      node.choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.textContent = choice.text;
+        btn.onclick = () => showStoryNode(choice.next);
+        choicesEl.appendChild(btn);
+      });
+    }
+
+    startGame();
+  </script>
+
+</body>
+</html>
